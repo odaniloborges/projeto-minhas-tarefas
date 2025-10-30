@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Props } from '.'
 
-export const Card = styled.div<Props>`
+type PropsS = Omit<Props, 'contador' | 'legenda'>
+
+export const Card = styled.div<PropsS>`
   padding: 8px;
   border: 1px solid ${(props) => (props.ativo ? '#1e90ff' : '#a1a1a1')};
   border-radius: 8px;
