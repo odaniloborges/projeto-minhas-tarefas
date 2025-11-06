@@ -1,0 +1,6 @@
+export default {
+  vermelho: '#C23616',
+  laranja: '#E1A32A',
+  amarelo: '#F0C11A',
+  verde: '#44BD32'
+}
