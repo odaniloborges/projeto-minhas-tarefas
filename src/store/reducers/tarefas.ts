@@ -2,34 +2,44 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Tarefa from '../../models/Tarefa'
 import * as enums from '../../utils/enums/tarefa'
 
+type TarefaState = {
+  itens: Tarefa[]
+}
+
+const initialState: TarefaState = {
+  itens: [
+    {
+      id: 1,
+      titulo: 'estudar Javascript',
+      prioridade: enums.Prioridade.NORMAL,
+      status: enums.Status.PENDENTE,
+      descricao: 'realizar as tarefas do curso'
+    },
+    {
+      id: 2,
+      titulo: 'estudar Typescript',
+      prioridade: enums.Prioridade.NORMAL,
+      status: enums.Status.PENDENTE,
+      descricao: 'realizar as tarefas do curso'
+    },
+    {
+      id: 3,
+      titulo: 'estudar Bootstrap',
+      prioridade: enums.Prioridade.NORMAL,
+      status: enums.Status.PENDENTE,
+      descricao: 'realizar as tarefas do curso'
+    }
+  ]
+}
+
 const tarefasSlice = createSlice({
   name: 'tarefas',
-  initialState: [
-    new Tarefa(
-      'estudar Javascript',
-      enums.Prioridade.IMPORTANTE,
-      enums.Status.PENDENTE,
-      'realizar as tarefas do curso',
-      1
-    ),
-    new Tarefa(
-      'estudar Javascript',
-      enums.Prioridade.IMPORTANTE,
-      enums.Status.PENDENTE,
-      '',
-      2
-    ),
-    new Tarefa(
-      'estudar Javascript',
-      enums.Prioridade.IMPORTANTE,
-      enums.Status.PENDENTE,
-      'realizar as tarefas do curso',
-      3
-    )
-  ],
+  initialState,
   reducers: {
     remover: (state, action: PayloadAction<number>) => {
-      state = state.filter((tarefa) => tarefa.id !== action.payload)
+      state.itens = [
+        ...state.itens.filter((tarefa) => tarefa.id !== action.payload)
+      ]
     }
   }
 })
