@@ -11,8 +11,8 @@ const initialState: TarefaState = {
     {
       id: 1,
       titulo: 'estudar Javascript',
-      prioridade: enums.Prioridade.NORMAL,
-      status: enums.Status.PENDENTE,
+      prioridade: enums.Prioridade.URGENTE,
+      status: enums.Status.CONCLUIDO,
       descricao: 'realizar as tarefas do curso'
     },
     {
@@ -25,7 +25,7 @@ const initialState: TarefaState = {
     {
       id: 3,
       titulo: 'estudar Bootstrap',
-      prioridade: enums.Prioridade.NORMAL,
+      prioridade: enums.Prioridade.IMPORTANTE,
       status: enums.Status.PENDENTE,
       descricao: 'realizar as tarefas do curso'
     }
@@ -40,10 +40,18 @@ const tarefasSlice = createSlice({
       state.itens = [
         ...state.itens.filter((tarefa) => tarefa.id !== action.payload)
       ]
+    },
+    editar: (state, action: PayloadAction<Tarefa>) => {
+      const indexDaTarefa = state.itens.findIndex(
+        (t) => t.id === action.payload.id
+      )
+      if (indexDaTarefa >= 0) {
+        state.itens[indexDaTarefa] = action.payload
+      }
     }
   }
 })
 
-export const { remover } = tarefasSlice.actions
+export const { remover, editar } = tarefasSlice.actions
 
 export default tarefasSlice.reducer

@@ -5,12 +5,54 @@ import { RootReducer } from '../../store'
 
 const ListaTarefas = () => {
   const { itens } = useSelector((state: RootReducer) => state.tarefas)
+  const { termo, criterio, valor } = useSelector(
+    (state: RootReducer) => state.filtro
+  )
+
+  const filtraTarefas = () => {
+    let tarefaFiltradas = itens
+    if (termo !== undefined) {
+      tarefaFiltradas = tarefaFiltradas.filter(
+        (item) => item.titulo.toLowerCase().search(termo.toLowerCase()) >= 0
+      )
+
+      if (criterio === 'prioridade') {
+        tarefaFiltradas = tarefaFiltradas.filter(
+          (item) => item.prioridade === valor
+        )
+      } else if (criterio === 'status') {
+        tarefaFiltradas = tarefaFiltradas.filter(
+          (item) => item.status === valor
+        )
+      }
+
+      return tarefaFiltradas
+    } else {
+      return itens
+    }
+  }
+
+  const exibeResultadoFiltragem = (quantidade: number) => {
+    let mensagem = ''
+    const complementacao =
+      termo !== undefined && termo.length > 0 ? `e "${termo}"` : ` `
+
+    if (criterio === 'todas') {
+      mensagem = `${quantidade} tarefa(s) marcada(s) como: todas ${complementacao}`
+    } else {
+      mensagem = `${quantidade} tarefa(s) marcada(s) como: "${criterio} = ${valor}" ${complementacao}`
+    }
+    return mensagem
+  }
+
+  const tarefas = filtraTarefas()
+  const mensagem = exibeResultadoFiltragem(tarefas.length)
 
   return (
     <S.Container>
-      <p>2 tarefas marcadas como: &quot;todas&quot; e &quot;termo&quot;</p>
+      <S.Resultado>{mensagem}</S.Resultado>
       <ul>
-        {itens.map((t) => (
+        {tarefas.map((t) => (
           <li key={t.titulo}>
             <Tarefa
               id={t.id}
