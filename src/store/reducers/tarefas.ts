@@ -6,7 +6,7 @@ type TarefaState = {
   itens: Tarefa[]
 }
 
-const initialState: TarefaState = {
+/* const initialState: TarefaState = {
   itens: [
     {
       id: 1,
@@ -30,6 +30,16 @@ const initialState: TarefaState = {
       descricao: 'realizar as tarefas do curso'
     }
   ]
+} */ // Código original da Aula //
+
+const tarefasArmazenadas = localStorage.getItem('tarefas')
+
+const tarefasIniciais: Tarefa[] = tarefasArmazenadas
+  ? JSON.parse(tarefasArmazenadas)
+  : []
+
+const initialState: TarefaState = {
+  itens: tarefasIniciais
 }
 
 const tarefasSlice = createSlice({
@@ -48,10 +58,42 @@ const tarefasSlice = createSlice({
       if (indexDaTarefa >= 0) {
         state.itens[indexDaTarefa] = action.payload
       }
+    },
+    cadastrar: (state, action: PayloadAction<Omit<Tarefa, 'id'>>) => {
+      const tarefaJaExiste = state.itens.find(
+        (tarefa) =>
+          tarefa.titulo.toLocaleLowerCase() ===
+          action.payload.titulo.toLocaleLowerCase()
+      )
+
+      if (tarefaJaExiste) {
+        alert('Já existe uma tarefa com esse Titulo')
+      } else {
+        const ultimaTarefa = state.itens[state.itens.length - 1]
+
+        const tarefaNova = {
+          ...action.payload,
+          id: ultimaTarefa ? ultimaTarefa.id + 1 : 1
+        }
+        state.itens.push(tarefaNova)
+      }
+    },
+    alteraStatus: (
+      state,
+      action: PayloadAction<{ id: number; finalizado: boolean }>
+    ) => {
+      const indexDaTarefa = state.itens.findIndex(
+        (t) => t.id === action.payload.id
+      )
+      if (indexDaTarefa >= 0) {
+        state.itens[indexDaTarefa].status = action.payload.finalizado
+          ? enums.Status.CONCLUIDO
+          : enums.Status.PENDENTE
+      }
     }
   }
 })
 
-export const { remover, editar } = tarefasSlice.actions
+export const { remover, editar, cadastrar, alteraStatus } = tarefasSlice.actions
 
 export default tarefasSlice.reducer
