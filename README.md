@@ -1,6 +1,6 @@
 # 📝 Minhas Tarefas — App de Gestão com React + Redux
 
-Projeto criado como parte do curso de Engenharia Front-End da [EBAC](https://ebaconline.com.br), e posteriormente **melhorado por mim** com foco em **responsividade, acessibilidade e experiência de usuário**.
+Projeto criado como parte do curso de Engenharia Front-End da [EBAC](https://ebaconline.com.br).
 
 [`v2` no GitHub](https://github.com/jose-junior1/minhas-tarefas)
 
