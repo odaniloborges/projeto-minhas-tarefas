@@ -2,7 +2,7 @@
 
 Projeto criado como parte do curso de Engenharia Front-End da [EBAC](https://ebaconline.com.br).
 
-[`v2` no GitHub](https://github.com/jose-junior1/minhas-tarefas)
+[`v2` no GitHub](https://github.com/odaniloborges/projeto-minhas-tarefas)
 
 ---
 
